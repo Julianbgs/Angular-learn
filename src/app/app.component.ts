@@ -2,19 +2,22 @@ import {Component, OnInit} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ApiService } from '../core/services/api.service';
 import {CommonModule} from '@angular/common';
+import {CardsComponent} from './cards/cards.component';
+import {PostCard} from '../core/interfaces/post-card';
 
 @Component({
   selector: 'app-root',
   imports: [
     RouterOutlet,
-    CommonModule
+    CommonModule,
+    CardsComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
   title = 'angular-cli';
-  data: any = [];
+  data: PostCard[] = [];
 
   constructor(private apiService: ApiService) {
   }

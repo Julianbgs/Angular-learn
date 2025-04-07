@@ -1,4 +1,8 @@
-<ng-container *ngFor="let item of data">
-  <div class="title">Title {{item.title}}</div> <br />
-  <div>Id {{item.id}}</div> <br />
-</ng-container>
+<!--<ng-container *ngFor="let item of data">-->
+<!--  <div class="title">Title {{item.title}}</div> <br />-->
+<!--  <div>Id {{item.id}}</div> <br />-->
+<!--  <div>User id {{item.userId}}</div> <br />-->
+<!--</ng-container>-->
+<app-cards
+  [cards]="data"
+></app-cards>

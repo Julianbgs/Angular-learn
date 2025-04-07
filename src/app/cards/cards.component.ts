@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {PostCard} from '../../core/interfaces/post-card';
 import {CommonModule} from '@angular/common';
+import {CardsPaginationService} from '../../core/services/cards-pagination.service';
 
 @Component({
   selector: 'app-cards',
@@ -10,5 +11,25 @@ import {CommonModule} from '@angular/common';
   styleUrl: './cards.component.scss'
 })
 export class CardsComponent {
-  @Input('cards') public cards: PostCard[] | undefined;
+  pageNumber = 1;
+
+  constructor(
+    public paginationService: CardsPaginationService
+  ) {
+  }
+
+  setPaginationPage(page: number) {
+    this.paginationService.getPaginationPage(page)
+  }
+
+  prevPaginationPage(page: number) {
+    if(this.pageNumber < 1) return
+    this.pageNumber = this.pageNumber - 1
+    this.paginationService.paginationData$.next(this.paginationService.getPaginationPage(this.pageNumber))
+  }
+
+  nextPaginationPage(page: number) {
+    this.pageNumber = this.pageNumber + 1
+    this.paginationService.paginationData$.next(this.paginationService.getPaginationPage(this.pageNumber))
+  }
 }

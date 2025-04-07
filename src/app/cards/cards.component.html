@@ -1,8 +1,12 @@
 <div class="cards">
-  <ng-container *ngFor="let card of cards">
+  <ng-container *ngFor="let card of paginationService.paginationData$ | async">
     <div class="card">
       <h3>{{card.id}}</h3>
       <p>{{card.title}}</p>
     </div>
   </ng-container>
+  <div class="pagination">
+    <button (click)="prevPaginationPage(pageNumber)">prev</button>
+    <button (click)="nextPaginationPage(pageNumber)">next</button>
+  </div>
 </div>

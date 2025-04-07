@@ -18,10 +18,6 @@ export class CardsComponent {
   ) {
   }
 
-  setPaginationPage(page: number) {
-    this.paginationService.getPaginationPage(page)
-  }
-
   prevPaginationPage(page: number) {
     if(this.pageNumber < 1) return
     this.pageNumber = this.pageNumber - 1

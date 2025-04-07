@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
     this.apiService.getApiTools('https://jsonplaceholder.typicode.com/posts')
       .subscribe((res: PostCard[]) => {
       this.paginationService.cardsData$.next(res);
-      this.paginationService.paginationData$.next(this.paginationService.getPaginationPage(1))
+      this.paginationService.getPaginationPage(1)
     })
   }
 }

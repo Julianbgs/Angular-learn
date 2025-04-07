@@ -9,8 +9,8 @@ export class CardsPaginationService {
   public cardsData$: BehaviorSubject<PostCard[]> = new BehaviorSubject<PostCard[]>([]);
   public paginationData$: BehaviorSubject<PostCard[]> = new BehaviorSubject<PostCard[]>([]);
 
-  getPaginationPage(page: number): PostCard[] {
-    return this.cardsData$.value.slice(((page * 10) - 10), page * 10)
+  getPaginationPage(page: number): void {
+    this.paginationData$.next(this.cardsData$.value.slice(((page * 10) - 10), page * 10))
   }
 
 }

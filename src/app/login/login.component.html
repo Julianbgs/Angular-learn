@@ -1,0 +1,17 @@
+<div class="login-wrapper">
+  <div class="circles">
+    <div *ngFor="let circle of circles" [style]="circle"></div>
+  </div>
+
+  <div class="login-container">
+    <h1>Войдите в систему</h1>
+    <input #email placeholder="Email" type="email">
+    <input #password type="password" placeholder="Пароль">
+    <button (click)="login(email.value, password.value)">Войти</button>
+
+    <div class="additional-links">
+<!--      <a routerLink="/forgot-password">Забыли пароль?</a>-->
+      <a routerLink="/register">Регистрация</a>
+    </div>
+  </div>
+</div>

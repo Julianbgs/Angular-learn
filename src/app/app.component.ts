@@ -1,10 +1,16 @@
 import {Component, OnInit} from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {Router, RouterModule, RouterOutlet} from '@angular/router';
 import { ApiService } from '../core/services/api.service';
 import {CommonModule} from '@angular/common';
 import {CardsComponent} from './cards/cards.component';
 import {PostCard} from '../core/interfaces/post-card';
 import {CardsPaginationService} from '../core/services/cards-pagination.service';
+import { initializeApp } from "firebase/app";
+import {LoginComponent} from './login/login.component';
+import {AuthService} from '../core/services/auth.service';
+import {User} from '@angular/fire/auth';
+import {Observable} from 'rxjs';
+import {RegisterComponent} from './register/register.component';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +18,8 @@ import {CardsPaginationService} from '../core/services/cards-pagination.service'
     RouterOutlet,
     CommonModule,
     CardsComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
@@ -19,14 +27,25 @@ import {CardsPaginationService} from '../core/services/cards-pagination.service'
 export class AppComponent implements OnInit {
   title = 'angular-cli';
   data: PostCard[] = [];
+  currentUser$: Observable<User | null>;
 
   constructor(
     private apiService: ApiService,
     private paginationService: CardsPaginationService,
+    private authService: AuthService,
+    private router: Router,
   ) {
+    this.currentUser$ = this.authService.currentUser$;
   }
 
   ngOnInit() {
+    this.currentUser$.subscribe(user => {
+      if (user) {
+        this.router.navigate(['cards']);
+      } else {
+        this.router.navigate(['login']);
+      }
+    })
     this.apiService.getApiTools('https://jsonplaceholder.typicode.com/posts')
       .subscribe((res: PostCard[]) => {
       this.paginationService.cardsData$.next(res);

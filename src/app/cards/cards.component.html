@@ -1,12 +1,25 @@
-<div class="cards">
-  <ng-container *ngFor="let card of paginationService.paginationData$ | async">
-    <div class="card">
-      <h3>{{card.id}}</h3>
-      <p>{{card.title}}</p>
+<div class="cards-container">
+  <div class="circles">
+    <div *ngFor="let circle of circles" [style]="circle"></div>
+  </div>
+
+  <div class="cards-wrapper">
+    <div class="cards">
+      <ng-container *ngFor="let card of paginationService.paginationData$ | async">
+        <div class="card">
+          <h3>{{card.id}}</h3>
+          <p>{{card.title}}</p>
+        </div>
+      </ng-container>
     </div>
-  </ng-container>
-  <div class="pagination">
-    <button (click)="prevPaginationPage(pageNumber)">prev</button>
-    <button (click)="nextPaginationPage(pageNumber)">next</button>
+
+    <div class="pagination">
+      <button class="pagination-btn" (click)="prevPaginationPage(pageNumber)">
+        <span>Назад</span>
+      </button>
+      <button class="pagination-btn" (click)="nextPaginationPage(pageNumber)">
+        <span>Вперед</span>
+      </button>
+    </div>
   </div>
 </div>

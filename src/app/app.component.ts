@@ -42,7 +42,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.currentUser$.subscribe(user => {
       if (user) {
-        this.router.navigate(['cards']);
+        this.router.navigate(['dashboard']);
       } else {
         this.router.navigate(['login']);
       }

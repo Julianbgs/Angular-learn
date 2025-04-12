@@ -1,73 +1,108 @@
-<div class="dashboard-container" *ngIf="currentUser; else notLoggedIn">
-  <h2>User Dashboard</h2>
-
-  <div *ngIf="isLoading" class="loading-indicator">
-    <mat-spinner diameter="40"></mat-spinner>
-    <span>Loading...</span>
+<div class="dashboard-wrapper" *ngIf="currentUser; else notLoggedIn">
+  <div class="circles">
+    <div *ngFor="let circle of [1,2,3,4,5,6,7,8,9,10]"></div>
   </div>
 
-  <div *ngIf="saveSuccess" class="success-message">
-    <mat-icon>check_circle</mat-icon>
-    Data saved successfully!
+  <div class="dashboard-container">
+    <div class="dashboard-header">
+      <h1>User Dashboard</h1>
+      <div class="user-info">
+        <mat-icon class="user-icon">account_circle</mat-icon>
+        <span>{{currentUser.email}}</span>
+      </div>
+    </div>
+
+    <div *ngIf="isLoading" class="loading-message">
+      <mat-spinner diameter="30"></mat-spinner>
+      <span>Loading...</span>
+    </div>
+
+    <div *ngIf="saveSuccess" class="success-message">
+      <mat-icon>check_circle</mat-icon>
+      <span>Profile updated successfully!</span>
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message">
+      <mat-icon>error</mat-icon>
+      <span>{{errorMessage}}</span>
+    </div>
+
+    <form [formGroup]="userDataForm" (ngSubmit)="saveUserData()" class="dashboard-form">
+      <div class="form-group">
+        <mat-icon class="input-icon">badge</mat-icon>
+        <input
+          formControlName="displayName"
+          placeholder="Display Name"
+          [class.invalid]="userDataForm.get('displayName')?.invalid && userDataForm.get('displayName')?.touched">
+        <mat-error *ngIf="userDataForm.get('displayName')?.invalid && userDataForm.get('displayName')?.touched">
+          Display name is required
+        </mat-error>
+      </div>
+
+      <div class="form-group">
+        <mat-icon class="input-icon">cake</mat-icon>
+        <input
+          type="number"
+          formControlName="age"
+          placeholder="Age"
+          [class.invalid]="userDataForm.get('age')?.invalid && userDataForm.get('age')?.touched">
+        <mat-error *ngIf="userDataForm.get('age')?.hasError('min')">
+          Must be at least 18
+        </mat-error>
+        <mat-error *ngIf="userDataForm.get('age')?.hasError('max')">
+          Must be less than 100
+        </mat-error>
+      </div>
+
+      <div class="form-group">
+        <mat-icon class="input-icon">description</mat-icon>
+        <textarea
+          formControlName="bio"
+          placeholder="Bio"
+          rows="3"
+          [class.invalid]="userDataForm.get('bio')?.invalid && userDataForm.get('bio')?.touched"></textarea>
+        <mat-error *ngIf="userDataForm.get('bio')?.hasError('maxlength')">
+          Maximum 500 characters
+        </mat-error>
+      </div>
+
+      <div class="form-group">
+        <mat-icon class="input-icon">link</mat-icon>
+        <input
+          formControlName="website"
+          placeholder="Website (https://example.com)"
+          [class.invalid]="userDataForm.get('website')?.invalid && userDataForm.get('website')?.touched">
+        <mat-error *ngIf="userDataForm.get('website')?.hasError('pattern')">
+          Please enter a valid URL
+        </mat-error>
+      </div>
+
+      <button
+        type="submit"
+        [disabled]="userDataForm.invalid || isLoading"
+        class="submit-btn">
+        <span *ngIf="!isLoading">Update Profile</span>
+        <mat-spinner *ngIf="isLoading" diameter="24"></mat-spinner>
+      </button>
+    </form>
   </div>
-
-  <div *ngIf="errorMessage" class="error-message">
-    <mat-icon>error</mat-icon>
-    {{ errorMessage }}
-  </div>
-
-  <form [formGroup]="userDataForm" (ngSubmit)="saveUserData()">
-    <mat-form-field appearance="outline">
-      <mat-label>Display Name</mat-label>
-      <input matInput formControlName="displayName" required>
-      <mat-error *ngIf="userDataForm.get('displayName')?.hasError('required')">
-        Display name is required
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Age</mat-label>
-      <input matInput type="number" formControlName="age">
-      <mat-error *ngIf="userDataForm.get('age')?.hasError('min')">
-        Must be at least 18 years old
-      </mat-error>
-      <mat-error *ngIf="userDataForm.get('age')?.hasError('max')">
-        Must be less than 100 years old
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Bio</mat-label>
-      <textarea matInput formControlName="bio" rows="4"></textarea>
-<!--      <mat-hint>{{ userDataForm.get('bio')?.value?.length || 0 }}/500</mat-hint>-->
-      <mat-error *ngIf="userDataForm.get('bio')?.hasError('maxlength')">
-        Bio cannot exceed 500 characters
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Website</mat-label>
-      <input matInput formControlName="website" placeholder="https://example.com">
-      <mat-error *ngIf="userDataForm.get('website')?.hasError('pattern')">
-        Please enter a valid URL (http:// or https://)
-      </mat-error>
-    </mat-form-field>
-
-    <button
-      mat-raised-button
-      color="primary"
-      type="submit"
-      [disabled]="userDataForm.invalid || isLoading">
-      <span *ngIf="!isLoading">Save Profile</span>
-      <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
-    </button>
-  </form>
 </div>
 
 <ng-template #notLoggedIn>
-  <div class="not-logged-in">
-    <mat-icon class="icon">lock</mat-icon>
-    <p>Please log in to access the dashboard</p>
-    <button mat-raised-button color="primary" routerLink="/login">Login</button>
+  <div class="dashboard-wrapper">
+    <div class="circles">
+      <div *ngFor="let circle of [1,2,3,4,5,6,7,8,9,10]"></div>
+    </div>
+
+    <div class="dashboard-container">
+      <div class="dashboard-header">
+        <h1>Access Required</h1>
+      </div>
+      <div class="not-logged-message">
+        <mat-icon class="lock-icon">lock</mat-icon>
+        <p>Please sign in to access your dashboard</p>
+        <button routerLink="/login" class="login-btn">Sign In</button>
+      </div>
+    </div>
   </div>
 </ng-template>

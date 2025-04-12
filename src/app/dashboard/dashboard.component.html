@@ -1,0 +1,73 @@
+<div class="dashboard-container" *ngIf="currentUser; else notLoggedIn">
+  <h2>User Dashboard</h2>
+
+  <div *ngIf="isLoading" class="loading-indicator">
+    <mat-spinner diameter="40"></mat-spinner>
+    <span>Loading...</span>
+  </div>
+
+  <div *ngIf="saveSuccess" class="success-message">
+    <mat-icon>check_circle</mat-icon>
+    Data saved successfully!
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">
+    <mat-icon>error</mat-icon>
+    {{ errorMessage }}
+  </div>
+
+  <form [formGroup]="userDataForm" (ngSubmit)="saveUserData()">
+    <mat-form-field appearance="outline">
+      <mat-label>Display Name</mat-label>
+      <input matInput formControlName="displayName" required>
+      <mat-error *ngIf="userDataForm.get('displayName')?.hasError('required')">
+        Display name is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Age</mat-label>
+      <input matInput type="number" formControlName="age">
+      <mat-error *ngIf="userDataForm.get('age')?.hasError('min')">
+        Must be at least 18 years old
+      </mat-error>
+      <mat-error *ngIf="userDataForm.get('age')?.hasError('max')">
+        Must be less than 100 years old
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Bio</mat-label>
+      <textarea matInput formControlName="bio" rows="4"></textarea>
+<!--      <mat-hint>{{ userDataForm.get('bio')?.value?.length || 0 }}/500</mat-hint>-->
+      <mat-error *ngIf="userDataForm.get('bio')?.hasError('maxlength')">
+        Bio cannot exceed 500 characters
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Website</mat-label>
+      <input matInput formControlName="website" placeholder="https://example.com">
+      <mat-error *ngIf="userDataForm.get('website')?.hasError('pattern')">
+        Please enter a valid URL (http:// or https://)
+      </mat-error>
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="userDataForm.invalid || isLoading">
+      <span *ngIf="!isLoading">Save Profile</span>
+      <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+    </button>
+  </form>
+</div>
+
+<ng-template #notLoggedIn>
+  <div class="not-logged-in">
+    <mat-icon class="icon">lock</mat-icon>
+    <p>Please log in to access the dashboard</p>
+    <button mat-raised-button color="primary" routerLink="/login">Login</button>
+  </div>
+</ng-template>

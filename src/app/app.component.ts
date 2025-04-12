@@ -5,12 +5,12 @@ import {CommonModule} from '@angular/common';
 import {CardsComponent} from './cards/cards.component';
 import {PostCard} from '../core/interfaces/post-card';
 import {CardsPaginationService} from '../core/services/cards-pagination.service';
-import { initializeApp } from "firebase/app";
 import {LoginComponent} from './login/login.component';
 import {AuthService} from '../core/services/auth.service';
 import {User} from '@angular/fire/auth';
 import {Observable} from 'rxjs';
 import {RegisterComponent} from './register/register.component';
+import {DashboardComponent} from './dashboard/dashboard.component';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +19,8 @@ import {RegisterComponent} from './register/register.component';
     CommonModule,
     CardsComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    DashboardComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

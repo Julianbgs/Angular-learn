@@ -2,11 +2,13 @@ import {Component, Input, OnInit} from '@angular/core';
 import {PostCard} from '../../core/interfaces/post-card';
 import {CommonModule} from '@angular/common';
 import {CardsPaginationService} from '../../core/services/cards-pagination.service';
+import {RouterLink} from '@angular/router';
+import {MatIcon} from '@angular/material/icon';
 
 @Component({
   selector: 'app-cards',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatIcon, RouterLink],
   templateUrl: './cards.component.html',
   styleUrl: './cards.component.scss'
 })

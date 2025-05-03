@@ -40,13 +40,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.currentUser$.subscribe(user => {
-      if (user) {
-        this.router.navigate(['dashboard']);
-      } else {
-        this.router.navigate(['login']);
-      }
-    })
     this.apiService.getApiTools('https://jsonplaceholder.typicode.com/posts')
       .subscribe((res: PostCard[]) => {
       this.paginationService.cardsData$.next(res);

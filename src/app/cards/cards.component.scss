@@ -149,3 +149,10 @@
     border-radius: 50%;
   }
 }
+
+.dashboard-link {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  z-index: 2;
+}

@@ -2,7 +2,9 @@
   <div class="circles">
     <div *ngFor="let circle of circles" [style]="circle"></div>
   </div>
-
+  <div class="dashboard-link" routerLink="/dashboard">
+    <mat-icon class="user-icon">badge</mat-icon>
+  </div>
   <div class="cards-wrapper">
     <div class="cards">
       <ng-container *ngFor="let card of paginationService.paginationData$ | async">

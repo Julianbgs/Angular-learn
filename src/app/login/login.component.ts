@@ -3,7 +3,7 @@ import {ApiService} from '../../core/services/api.service';
 import {CardsPaginationService} from '../../core/services/cards-pagination.service';
 import {AuthService} from '../../core/services/auth.service';
 import {CommonModule} from '@angular/common';
-import {RouterLink} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +17,8 @@ export class LoginComponent implements OnInit {
   circles: any[] = [];
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {
   }
 
@@ -38,6 +39,9 @@ export class LoginComponent implements OnInit {
   }
 
   login(email: string, password: string) {
-    this.authService.login(email, password).subscribe();
+    this.authService.login(email, password).subscribe({
+      next: () => this.router.navigate(['/cards']),  // Успешный вход → cards
+      error: (err) => console.error('Login error:', err)
+    });
   }
 }

@@ -39,9 +39,9 @@ export class CardsComponent implements OnInit {
   }
 
   prevPaginationPage(page: number) {
-    if(this.pageNumber < 1) return
-    this.pageNumber = this.pageNumber - 1
-    this.paginationService.getPaginationPage(this.pageNumber)
+    if(this.pageNumber <= 1) return;
+    this.pageNumber = this.pageNumber - 1;
+    this.paginationService.getPaginationPage(this.pageNumber);
   }
 
   nextPaginationPage(page: number) {
